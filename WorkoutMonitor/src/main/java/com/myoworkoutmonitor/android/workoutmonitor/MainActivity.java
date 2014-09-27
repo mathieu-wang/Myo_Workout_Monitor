@@ -5,6 +5,8 @@
 
 package com.myoworkoutmonitor.android.workoutmonitor;
 
+import java.math.BigDecimal;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -32,6 +34,7 @@ public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
 
     private TextView mTextView;
+    private TextView anglesView;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -46,6 +49,8 @@ public class MainActivity extends Activity {
             // Set the text color of the text view to cyan when a Myo connects.
             mTextView.setTextColor(Color.CYAN);
             mTextView.setText("Connected!");
+            anglesView = (TextView)findViewById(R.id.angle_text);
+            anglesView.setTextColor(Color.CYAN);
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -88,9 +93,16 @@ public class MainActivity extends Activity {
             }
 
             // Next, we apply a rotation to the text view using the roll, pitch, and yaw.
-            mTextView.setRotation(roll);
-            mTextView.setRotationX(pitch);
-            mTextView.setRotationY(yaw);
+//            mTextView.setRotation(roll);
+//            mTextView.setRotationX(pitch);
+//            mTextView.setRotationY(yaw);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("Current Angles:").append(System.getProperty("line.separator"));
+            sb.append("Roll: ").append(round(roll, 3)).append(System.getProperty("line.separator"));
+            sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
+            sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
+            anglesView.setText(sb.toString());
         }
 
         // onPose() is called whenever a Myo provides a new pose.
@@ -209,5 +221,18 @@ public class MainActivity extends Activity {
         // Launch the ScanActivity to scan for Myos to connect to.
         Intent intent = new Intent(this, ScanActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Round to certain number of decimals
+     *
+     * @param d
+     * @param decimalPlace
+     * @return
+     */
+    public float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
     }
 }
