@@ -39,6 +39,9 @@ public class MainActivity extends Activity {
     private TextView mTextView;
     private TextView anglesView;
 
+    private float maxPitch = Float.MIN_VALUE;
+    private float minPitch = Float.MAX_VALUE;
+
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
     private DeviceListener mListener = new AbstractDeviceListener() {
@@ -55,7 +58,7 @@ public class MainActivity extends Activity {
             anglesView = (TextView)findViewById(R.id.angle_text);
             anglesView.setTextColor(Color.CYAN);
 
-            write("dummy", "testing");
+            write("Exercise 1", "Bicep Curl");
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -97,6 +100,12 @@ public class MainActivity extends Activity {
                 pitch *= -1;
             }
 
+            if (pitch > maxPitch) {
+                maxPitch = pitch;
+            }
+            if (pitch < minPitch) {
+                minPitch = pitch;
+            }
             // Next, we apply a rotation to the text view using the roll, pitch, and yaw.
 //            mTextView.setRotation(roll);
 //            mTextView.setRotationX(pitch);
@@ -104,6 +113,8 @@ public class MainActivity extends Activity {
 
             StringBuilder sb = new StringBuilder();
             sb.append("Current Angles:").append(System.getProperty("line.separator"));
+            sb.append("Max Pitch: ").append(round(maxPitch, 3)).append(System.getProperty("line.separator"));
+            sb.append("Min Pitch: ").append(round(minPitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Roll: ").append(round(roll, 3)).append(System.getProperty("line.separator"));
             sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
