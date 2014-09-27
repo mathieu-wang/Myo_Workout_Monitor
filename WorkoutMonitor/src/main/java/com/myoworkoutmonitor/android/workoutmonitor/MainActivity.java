@@ -5,10 +5,6 @@
 
 package com.myoworkoutmonitor.android.workoutmonitor;
 
-import java.io.*;
-
-import java.math.BigDecimal;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
@@ -17,6 +13,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +27,14 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigDecimal;
 
 
 public class MainActivity extends Activity {
@@ -177,6 +183,20 @@ public class MainActivity extends Activity {
             finish();
             return;
         }
+
+        final Button startRecordingButton = (Button) findViewById(R.id.start_recording);
+        final Button stopRecordingButton = (Button) findViewById(R.id.stop_recording);
+        startRecordingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Start Recording
+            }
+        });
+
+        stopRecordingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Stop Recording
+            }
+        });
 
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);

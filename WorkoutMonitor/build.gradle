@@ -18,7 +18,7 @@ dependencies {
             // this must point to the myorepository distributed with the Myo SDK
             ///Users/Gc/Downloads/myo-android-sdk-0.6.0
 
-            url '/Users/Gc/Downloads/myo-android-sdk-0.6.0/myorepository'
+            url '/Users/Mystery/Downloads/myo-android-sdk-0.6.0/myorepository'
         }
     }
     
