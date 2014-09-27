@@ -5,6 +5,8 @@
 
 package com.myoworkoutmonitor.android.workoutmonitor;
 
+import java.io.*;
+
 import java.math.BigDecimal;
 
 import android.app.Activity;
@@ -27,6 +29,7 @@ import com.thalmic.myo.Pose;
 import com.thalmic.myo.Quaternion;
 import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
+
 
 public class MainActivity extends Activity {
 
@@ -51,6 +54,8 @@ public class MainActivity extends Activity {
             mTextView.setText("Connected!");
             anglesView = (TextView)findViewById(R.id.angle_text);
             anglesView.setTextColor(Color.CYAN);
+
+            write("dummy", "testing");
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -234,5 +239,43 @@ public class MainActivity extends Activity {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
+    }
+
+    public Boolean write(String fileName, String fileContent){
+        try {
+            String path = "/sdcard/"+fileName+".txt";
+            File file = new File(path);
+            // If file does not exists, then create it
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(fileContent);
+            bw.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String read(String fileName){
+        BufferedReader br = null;
+        String response = null;
+        try {
+            StringBuffer output = new StringBuffer();
+            String path = "/sdcard/"+fileName+".txt";
+            br = new BufferedReader(new FileReader(path));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                output.append(line +"\n");
+            }
+            response = output.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return response;
     }
 }

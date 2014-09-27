@@ -16,7 +16,9 @@ dependencies {
     repositories {
         maven {
             // this must point to the myorepository distributed with the Myo SDK
-            url '/Users/mathieuwang/Downloads/myo-android-sdk-0.6.0/myorepository'
+            ///Users/Gc/Downloads/myo-android-sdk-0.6.0
+
+            url '/Users/Gc/Downloads/myo-android-sdk-0.6.0/myorepository'
         }
     }
     
