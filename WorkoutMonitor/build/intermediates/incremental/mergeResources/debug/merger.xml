@@ -151,6 +151,8 @@ true
             <file
                 path="/Users/mathieuwang/repo/WorkoutMonitorProject/WorkoutMonitor/src/main/res/values/strings.xml"
                 qualifiers="" >
+                <string name="angle_text" >Current Angles
+                </string>
                 <string name="pose_wavein" >Wave In
                 </string>
                 <string name="arm_right" >Right Arm

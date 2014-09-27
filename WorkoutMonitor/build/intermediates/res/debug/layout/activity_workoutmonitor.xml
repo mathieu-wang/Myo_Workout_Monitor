@@ -12,6 +12,15 @@
         android:textSize="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        tools:ignore="SpUsage"/>
+
+    <TextView
+        android:id="@+id/angle_text"
+        android:text="@string/angle_text"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         tools:ignore="SpUsage"/>
 
