@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="/Users/mathieuwang/repo/WorkoutMonitorProject/WorkoutMonitor/build/intermediates/pre-dexed/debug/native-libs-452acd8d9e69619b552d58c12a4456c4bc41bb55.jar"
+        jar="/Users/mathieuwang/repo/WorkoutMonitorProject/WorkoutMonitor/build/intermediates/exploded-aar/com.thalmic/myosdk/0.6.0/libs/native-libs.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a8d40dfc06ce9040cbe2da440a887808d4f275bc"/>
+    <item
+        dex="/Users/mathieuwang/repo/WorkoutMonitorProject/WorkoutMonitor/build/intermediates/pre-dexed/debug/classes-1424cb1e14ee1b95aa8cb196354dcb3115f3de11.jar"
+        jar="/Users/mathieuwang/repo/WorkoutMonitorProject/WorkoutMonitor/build/intermediates/exploded-aar/com.thalmic/myosdk/0.6.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="99725a5ad7b296c3f0aacc3cccc892ffee6a88a8"/>
+    <item
+        dex="/Users/mathieuwang/Downloads/myo-android-sdk-0.6.0/samples/WorkoutMonitor/build/intermediates/pre-dexed/debug/native-libs-1a89fc2276d5d12c60e0baec08fc54bf9e6ad1af.jar"
+        jar="/Users/mathieuwang/Downloads/myo-android-sdk-0.6.0/samples/WorkoutMonitor/build/intermediates/exploded-aar/com.thalmic/myosdk/0.6.0/libs/native-libs.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="a8d40dfc06ce9040cbe2da440a887808d4f275bc"/>
+    <item
+        dex="/Users/mathieuwang/Downloads/myo-android-sdk-0.6.0/samples/WorkoutMonitor/build/intermediates/pre-dexed/debug/classes-da3131a134d985bf3139a9e45404100797cd8924.jar"
+        jar="/Users/mathieuwang/Downloads/myo-android-sdk-0.6.0/samples/WorkoutMonitor/build/intermediates/exploded-aar/com.thalmic/myosdk/0.6.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="99725a5ad7b296c3f0aacc3cccc892ffee6a88a8"/>
+
+</pre-dex-items>
