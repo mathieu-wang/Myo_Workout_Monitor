@@ -164,12 +164,28 @@ public class MainActivity extends Activity {
         }
 
         private float updateImageView(float min, float max, float current) {
-            float interval = Math.abs(max) + Math.abs(min);
-            if (current<0) {
-                return ((min-current)/interval)*360;
-            } else {
-                return ((current + Math.abs(min))/interval)*360;
+            float interval;
+            float result;
+            if (min >= 0 && max > 0) {
+                 interval = max - min;
+                 result = (current - min)/interval * 360;
             }
+            else if(min <= 0 && max < 0) {
+                interval = Math.abs(max) - Math.abs(min);
+                result = (min - current)/interval * 360;
+            }
+            else if(max >= 0 && min <=0 ) {
+                 interval = max - min;
+                result = (current - min)/interval * 360;
+
+            }
+            else {
+                interval = min - max;
+                result = (min - current)/interval * 360;
+            }
+
+            return result;
+
         }
     };
 
