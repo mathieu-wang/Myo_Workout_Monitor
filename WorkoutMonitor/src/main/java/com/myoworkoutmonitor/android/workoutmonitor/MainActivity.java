@@ -242,7 +242,16 @@ public class MainActivity extends Activity {
         startRecordingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Start Recording
-                isRecording = true;
+                if(startRecordingButton.getText().equals("Stop")) {
+                    isRecording = false;
+                    isRecorded = true;
+                    String toSave = maxPitch + "," + minPitch;
+                    write("Exercise_1", toSave);
+                    startExerciseButton.setText("Record");
+                }
+                else
+                    startRecordingButton.setText("Stop");
+
 
             }
         });
