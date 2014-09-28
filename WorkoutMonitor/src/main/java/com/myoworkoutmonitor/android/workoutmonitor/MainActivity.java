@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +56,8 @@ public class MainActivity extends Activity {
 
     private boolean maxReached = false;
     private boolean minReached = false;
+
+    private boolean isRecorded = false;
 
     private int repCount;
 
@@ -155,6 +158,15 @@ public class MainActivity extends Activity {
             sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
             anglesView.setText(sb.toString());
+
+            //code to update the curve
+            if (isRecorded) {
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                imageView.setPivotX(imageView.getWidth()/2);
+                imageView.setPivotY(imageView.getHeight()/2);
+                imageView.setRotation(updateImageView(savedMin, savedMax, pitch));
+
+            }
         }
 
         // onPose() is called whenever a Myo provides a new pose.
@@ -232,6 +244,7 @@ public class MainActivity extends Activity {
                 isRecording = false;
                 String toSave = maxPitch + "," + minPitch;
                 write("Exercise_1", toSave);
+                isRecorded = true;
             }
         });
 
@@ -385,5 +398,14 @@ public class MainActivity extends Activity {
         }
 
         return valid;
+    }
+
+    private float updateImageView(float min, float max, float current) {
+        float interval = Math.abs(max) + Math.abs(min);
+        if (current<0) {
+            return ((min-current)/interval)*360;
+        } else {
+            return ((current + Math.abs(min))/interval)*360;
+        }
     }
 }
