@@ -56,6 +56,8 @@ public class MainActivity extends Activity {
     private boolean maxReached = false;
     private boolean minReached = false;
 
+    private int repCount;
+
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
     private DeviceListener mListener = new AbstractDeviceListener() {
@@ -135,22 +137,20 @@ public class MainActivity extends Activity {
                 savedMax = Float.parseFloat(data_array[0].replace(" ", ""));
                 savedMin = Float.parseFloat(data_array[1].replace(" ", ""));
 
-
-                if (numberRepeat <= 10 && isStarted) {
-                    if (numberRepeat == 10) {
-                        isStarted = false;
-                    }
-                    if (isValid(pitch, savedMax, savedMin)) numberRepeat++;
-                }
+                incrementRep(pitch, savedMax, savedMin);
             }
 
 
             StringBuilder sb = new StringBuilder();
             sb.append("Current Angles:").append(System.getProperty("line.separator"));
+            sb.append("Number rep: ").append(round(repCount, 3)).append(System.getProperty("line.separator"));
             sb.append("Max Pitch: ").append(round(maxPitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Min Pitch: ").append(round(minPitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Saved Max: ").append(round(savedMax, 3)).append(System.getProperty("line.separator"));
             sb.append("Saved Min: ").append(round(savedMin, 3)).append(System.getProperty("line.separator"));
+
+
+
             sb.append("Roll: ").append(round(roll, 3)).append(System.getProperty("line.separator"));
             sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
@@ -359,23 +359,29 @@ public class MainActivity extends Activity {
         return response;
     }
 
-    public boolean isValid(float pitch, float savedMax, float savedMin) {
+    public boolean incrementRep(float pitch, float savedMax, float savedMin) {
         boolean valid = false;
         float validMaxMinimun = savedMax * 0.8f;
         float validMaxMaximun = savedMax * 1.2f;
 
         float validMinMinimun = savedMin * 0.8f;
         float validMinMaximun = savedMin * 1.2f;
+//
+//        boolean withinMaxAcceptable = false;
+//        boolean withinMinAcceptable = false;
+//        if( pitch > validMaxMinimun && pitch < validMaxMinimun) withinMaxAcceptable = true;
+//        if( pitch > validMinMinimun && pitch < validMinMaximun) withinMinAcceptable = true;
+//
+//        // maxReached minReached
 
-        boolean withinMaxAcceptable = false;
-        boolean withinMinAcceptable = false;
-        if( pitch > validMaxMinimun && pitch < validMaxMinimun) withinMaxAcceptable = true;
-        if( pitch > validMinMinimun && pitch < validMinMaximun) withinMinAcceptable = true;
 
-        // maxReached minReached
+        if (pitch > validMaxMinimun && !maxReached) {
+            repCount ++;
+            maxReached = true;
+        }
 
-        if (withinMaxAcceptable && minReached) {
-
+        if (pitch < validMaxMinimun) {
+            maxReached = false;
         }
 
         return valid;
