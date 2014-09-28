@@ -23,13 +23,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        >
+        android:weightSum="1">
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Record"
         android:id="@+id/start_recording"
-        android:layout_gravity="left|bottom" />
+        android:layout_gravity="center_horizontal|bottom" />
 <!--
         <Button
         android:layout_width="wrap_content"
@@ -44,9 +44,9 @@
         android:text="@string/angle_text"
         android:textSize="15dp"
         android:textColor="#333"
-        android:layout_width="wrap_content"
+        android:layout_width="112dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|left"
+        android:layout_gravity="center"
         tools:ignore="SpUsage"/>
 
     <ImageView
