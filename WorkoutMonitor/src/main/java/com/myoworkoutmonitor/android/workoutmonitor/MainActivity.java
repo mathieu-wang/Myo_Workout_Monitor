@@ -10,6 +10,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,12 +43,14 @@ public class MainActivity extends Activity {
 
     // This code will be returned in onActivityResult() when the enable Bluetooth activity exits.
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final String TAG = MainActivity.class.getName();
 
     private TextView mTextView;
     private TextView anglesView;
 
     private float maxPitch = Float.MIN_VALUE;
     private float minPitch = Float.MAX_VALUE;
+    private boolean isRecording = false;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -63,8 +67,6 @@ public class MainActivity extends Activity {
             mTextView.setText("Connected!");
             anglesView = (TextView)findViewById(R.id.angle_text);
             anglesView.setTextColor(Color.CYAN);
-
-            write("Exercise 1", "Bicep Curl");
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -106,21 +108,34 @@ public class MainActivity extends Activity {
                 pitch *= -1;
             }
 
-            if (pitch > maxPitch) {
+            if (pitch > maxPitch && isRecording) {
                 maxPitch = pitch;
             }
-            if (pitch < minPitch) {
+            if (pitch < minPitch && isRecording) {
                 minPitch = pitch;
             }
             // Next, we apply a rotation to the text view using the roll, pitch, and yaw.
 //            mTextView.setRotation(roll);
 //            mTextView.setRotationX(pitch);
 //            mTextView.setRotationY(yaw);
+            float savedMax = Float.MIN_VALUE;
+            float savedMin = Float.MAX_VALUE;
+
+            File file = new File("/sdcard/Exercise_1.txt");
+            if (file.exists()) {
+                String data = read("Exercise_1.txt");
+                String[] data_array = data.split(",");
+                savedMax = Float.parseFloat(data_array[0].replace(" ", ""));
+                savedMin = Float.parseFloat(data_array[1].replace(" ", ""));
+            }
+
 
             StringBuilder sb = new StringBuilder();
             sb.append("Current Angles:").append(System.getProperty("line.separator"));
             sb.append("Max Pitch: ").append(round(maxPitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Min Pitch: ").append(round(minPitch, 3)).append(System.getProperty("line.separator"));
+            sb.append("Saved Max: ").append(round(savedMax, 3)).append(System.getProperty("line.separator"));
+            sb.append("Saved Min: ").append(round(savedMin, 3)).append(System.getProperty("line.separator"));
             sb.append("Roll: ").append(round(roll, 3)).append(System.getProperty("line.separator"));
             sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
@@ -189,12 +204,17 @@ public class MainActivity extends Activity {
         startRecordingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Start Recording
+                isRecording = true;
+
             }
         });
 
         stopRecordingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Stop Recording
+                isRecording = false;
+                String toSave = maxPitch + "," + minPitch;
+                write("Exercise_1", toSave);
             }
         });
 
@@ -295,8 +315,13 @@ public class MainActivity extends Activity {
         BufferedReader br = null;
         String response = null;
         try {
+            File sdCard = Environment.getExternalStorageDirectory();
+            File dir = new File(sdCard.getAbsolutePath());
+
             StringBuffer output = new StringBuffer();
-            String path = "/sdcard/"+fileName+".txt";
+            String path = dir.getPath() + "/" + fileName;
+            Log.i(TAG, "path: " + path );
+//            String path = "/sdcard/"+fileName+".txt";
             br = new BufferedReader(new FileReader(path));
             String line = "";
             while ((line = br.readLine()) != null) {
