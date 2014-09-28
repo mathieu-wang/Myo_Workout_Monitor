@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
                 savedMax = Float.parseFloat(data_array[0].replace(" ", ""));
                 savedMin = Float.parseFloat(data_array[1].replace(" ", ""));
 
-                incrementRep(pitch, savedMax, savedMin);
+                incrementRep(pitch, savedMax, savedMin, myo);
             }
 
 
@@ -352,7 +352,7 @@ public class MainActivity extends Activity {
         return response;
     }
 
-    public boolean incrementRep(float pitch, float savedMax, float savedMin) {
+    public boolean incrementRep(float pitch, float savedMax, float savedMin, Myo myo) {
         boolean valid = false;
         float validMaxMinimun = savedMax * 0.8f;
         float validMaxMaximun = savedMax * 1.2f;
@@ -371,6 +371,7 @@ public class MainActivity extends Activity {
         if (pitch > validMaxMinimun && !maxReached && !isRecording) {
             repCount ++;
             maxReached = true;
+            myo.vibrate(Myo.VibrationType.SHORT);
             img.setImageResource(R.drawable.gauge_green);
 
         }
