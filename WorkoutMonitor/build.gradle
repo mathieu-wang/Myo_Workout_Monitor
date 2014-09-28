@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 18
-    buildToolsVersion "19.1.0"
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         minSdkVersion 18
@@ -18,9 +18,9 @@ dependencies {
             // this must point to the myorepository distributed with the Myo SDK
             ///Users/Gc/Downloads/myo-android-sdk-0.6.0
 
-            url '/Users/Mystery/Downloads/myo-android-sdk-0.6.0/myorepository'
+            url '/home/yuechuan/Downloads/myo-android-sdk-0.6.0/myorepository'
         }
     }
-    
     compile 'com.thalmic:myosdk:0.6.0@aar'
+    compile project(':seekArc_library')
 }
