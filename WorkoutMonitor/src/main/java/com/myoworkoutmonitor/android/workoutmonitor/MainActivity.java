@@ -51,6 +51,10 @@ public class MainActivity extends Activity {
     private float maxPitch = Float.MIN_VALUE;
     private float minPitch = Float.MAX_VALUE;
     private boolean isRecording = false;
+    private boolean isStarted = false;
+
+    private boolean maxReached = false;
+    private boolean minReached = false;
 
     // Classes that inherit from AbstractDeviceListener can be used to receive events from Myo devices.
     // If you do not override an event, the default behavior is to do nothing.
@@ -102,6 +106,9 @@ public class MainActivity extends Activity {
             float pitch = (float) Math.toDegrees(Quaternion.pitch(rotation));
             float yaw = (float) Math.toDegrees(Quaternion.yaw(rotation));
 
+            int numberRepeat = 0;
+
+
             // Adjust roll and pitch for the orientation of the Myo on the arm.
             if (mXDirection == XDirection.TOWARD_ELBOW) {
                 roll *= -1;
@@ -127,6 +134,14 @@ public class MainActivity extends Activity {
                 String[] data_array = data.split(",");
                 savedMax = Float.parseFloat(data_array[0].replace(" ", ""));
                 savedMin = Float.parseFloat(data_array[1].replace(" ", ""));
+
+
+                if (numberRepeat <= 10 && isStarted) {
+                    if (numberRepeat == 10) {
+                        isStarted = false;
+                    }
+                    if (isValid(pitch, savedMax, savedMin)) numberRepeat++;
+                }
             }
 
 
@@ -201,6 +216,8 @@ public class MainActivity extends Activity {
 
         final Button startRecordingButton = (Button) findViewById(R.id.start_recording);
         final Button stopRecordingButton = (Button) findViewById(R.id.stop_recording);
+        final Button startExerciseButton = (Button) findViewById(R.id.start_exercise);
+
         startRecordingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Start Recording
@@ -215,6 +232,13 @@ public class MainActivity extends Activity {
                 isRecording = false;
                 String toSave = maxPitch + "," + minPitch;
                 write("Exercise_1", toSave);
+            }
+        });
+
+        startExerciseButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Stop Recording
+                isStarted = true;
             }
         });
 
@@ -333,5 +357,27 @@ public class MainActivity extends Activity {
             return null;
         }
         return response;
+    }
+
+    public boolean isValid(float pitch, float savedMax, float savedMin) {
+        boolean valid = false;
+        float validMaxMinimun = savedMax * 0.8f;
+        float validMaxMaximun = savedMax * 1.2f;
+
+        float validMinMinimun = savedMin * 0.8f;
+        float validMinMaximun = savedMin * 1.2f;
+
+        boolean withinMaxAcceptable = false;
+        boolean withinMinAcceptable = false;
+        if( pitch > validMaxMinimun && pitch < validMaxMinimun) withinMaxAcceptable = true;
+        if( pitch > validMinMinimun && pitch < validMinMaximun) withinMinAcceptable = true;
+
+        // maxReached minReached
+
+        if (withinMaxAcceptable && minReached) {
+
+        }
+
+        return valid;
     }
 }
