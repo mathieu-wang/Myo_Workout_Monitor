@@ -53,9 +53,10 @@ public class MainActivity extends Activity {
     private float minPitch = Float.MAX_VALUE;
     private boolean isRecording = false;
     private boolean isStarted = false;
-    private boolean isRecorded = false;
     private boolean maxReached = false;
     private boolean minReached = false;
+
+    private boolean isRecorded = false;
 
     private int repCount;
 
@@ -165,6 +166,7 @@ public class MainActivity extends Activity {
                 imageView.setRotation(updateImageView(savedMin, savedMax, pitch));
 
             }
+
         }
 
         private float updateImageView(float min, float max, float current) {
@@ -405,5 +407,14 @@ public class MainActivity extends Activity {
         }
 
         return valid;
+    }
+
+    private float updateImageView(float min, float max, float current) {
+        float interval = Math.abs(max) + Math.abs(min);
+        if (current<0) {
+            return ((min-current)/interval)*360;
+        } else {
+            return ((current + Math.abs(min))/interval)*360;
+        }
     }
 }
