@@ -74,7 +74,7 @@ public class MainActivity extends Activity {
             mTextView.setTextColor(Color.CYAN);
             mTextView.setText("Connected!");
             anglesView = (TextView)findViewById(R.id.angle_text);
-            anglesView.setTextColor(Color.CYAN);
+            //anglesView.setTextColor(Color.CYAN);
         }
 
         // onDisconnect() is called whenever a Myo has been disconnected.
@@ -236,42 +236,36 @@ public class MainActivity extends Activity {
         }
 
         final Button startRecordingButton = (Button) findViewById(R.id.start_recording);
-        final Button stopRecordingButton = (Button) findViewById(R.id.stop_recording);
-        final Button startExerciseButton = (Button) findViewById(R.id.start_exercise);
+//        final Button startExerciseButton = (Button) findViewById(R.id.start_exercise);
 
         startRecordingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Start Recording
                 if(startRecordingButton.getText().equals("Stop")) {
                     isRecording = false;
-                    isRecorded = true;
+
                     String toSave = maxPitch + "," + minPitch;
                     write("Exercise_1", toSave);
-                    startExerciseButton.setText("Record");
+                    isRecorded = true;
+                    startRecordingButton.setText("Record");
                 }
-                else
+                else {
                     startRecordingButton.setText("Stop");
+                    isRecording =true;
+                   }
 
 
             }
         });
 
-        stopRecordingButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Stop Recording
-                isRecording = false;
-                String toSave = maxPitch + "," + minPitch;
-                write("Exercise_1", toSave);
-                isRecorded = true;
-            }
-        });
-
+        /*
         startExerciseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Stop Recording
                 isStarted = true;
             }
         });
+        */
 
         // Next, register for DeviceListener callbacks.
         hub.addListener(mListener);
