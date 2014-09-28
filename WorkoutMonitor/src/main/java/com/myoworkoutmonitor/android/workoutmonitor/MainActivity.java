@@ -46,8 +46,8 @@ public class MainActivity extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String TAG = MainActivity.class.getName();
 
-    private TextView mTextView;
     private TextView anglesView;
+    private TextView repView;
 
     private float maxPitch = Float.MIN_VALUE;
     private float minPitch = Float.MAX_VALUE;
@@ -71,9 +71,8 @@ public class MainActivity extends Activity {
         @Override
         public void onConnect(Myo myo, long timestamp) {
             // Set the text color of the text view to cyan when a Myo connects.
-            mTextView.setTextColor(Color.CYAN);
-            mTextView.setText("Connected!");
             anglesView = (TextView)findViewById(R.id.angle_text);
+            repView = (TextView)findViewById(R.id.rep_text);
             //anglesView.setTextColor(Color.CYAN);
         }
 
@@ -81,7 +80,6 @@ public class MainActivity extends Activity {
         @Override
         public void onDisconnect(Myo myo, long timestamp) {
             // Set the text color of the text view to red when a Myo disconnects.
-            mTextView.setTextColor(Color.RED);
         }
 
         // onArmRecognized() is called whenever Myo has recognized a setup gesture after someone has put it on their
@@ -144,20 +142,16 @@ public class MainActivity extends Activity {
 
 
             StringBuilder sb = new StringBuilder();
-            sb.append("Current Angles:").append(System.getProperty("line.separator"));
-            sb.append("Number rep: ").append(round(repCount, 3)).append(System.getProperty("line.separator"));
+
             sb.append("Max Pitch: ").append(round(maxPitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Min Pitch: ").append(round(minPitch, 3)).append(System.getProperty("line.separator"));
-            sb.append("Saved Max: ").append(round(savedMax, 3)).append(System.getProperty("line.separator"));
-            sb.append("Saved Min: ").append(round(savedMin, 3)).append(System.getProperty("line.separator"));
-
-
 
             sb.append("Roll: ").append(round(roll, 3)).append(System.getProperty("line.separator"));
             sb.append("Pitch: ").append(round(pitch, 3)).append(System.getProperty("line.separator"));
             sb.append("Yaw: ").append(round(yaw, 3)).append(System.getProperty("line.separator"));
             anglesView.setText(sb.toString());
 
+            repView.setText("Number Of Reps: " + round(repCount, 3) + System.getProperty("line.separator"));
             //code to update the curve
             if (isRecorded) {
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
@@ -177,54 +171,12 @@ public class MainActivity extends Activity {
                 return ((current + Math.abs(min))/interval)*360;
             }
         }
-
-        // onPose() is called whenever a Myo provides a new pose.
-        @Override
-        public void onPose(Myo myo, long timestamp, Pose pose) {
-            // Handle the cases of the Pose enumeration, and change the text of the text view
-            // based on the pose we receive.
-            mTextView.setText("Got Pose!");
-            switch (pose) {
-                case UNKNOWN:
-                    mTextView.setText(getString(R.string.display_text));
-                    break;
-                case REST:
-                    int restTextId = R.string.display_text;
-                    switch (mArm) {
-                        case LEFT:
-                            restTextId = R.string.arm_left;
-                            break;
-                        case RIGHT:
-                            restTextId = R.string.arm_right;
-                            break;
-                    }
-                    mTextView.setText(getString(restTextId));
-                    break;
-                case FIST:
-                    mTextView.setText(getString(R.string.pose_fist));
-                    break;
-                case WAVE_IN:
-                    mTextView.setText(getString(R.string.pose_wavein));
-                    break;
-                case WAVE_OUT:
-                    mTextView.setText(getString(R.string.pose_waveout));
-                    break;
-                case FINGERS_SPREAD:
-                    mTextView.setText(getString(R.string.pose_fingersspread));
-                    break;
-                case THUMB_TO_PINKY:
-                    mTextView.setText(getString(R.string.pose_thumbtopinky));
-                    break;
-            }
-        }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workoutmonitor);
-
-        mTextView = (TextView) findViewById(R.id.text);
 
         // First, we initialize the Hub singleton with an application identifier.
         Hub hub = Hub.getInstance();

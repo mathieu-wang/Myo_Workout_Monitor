@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Workout Monitor</string>
-    <string name="display_text">Start with the Sync Gesture</string>
     <string name="angle_text">Current Angles</string>
+    <string name="rep_text">Number of Reps</string>
     <string name="scan">Scan</string>
     <string name="pose_fist">Fist</string>
     <string name="pose_wavein">Wave In</string>

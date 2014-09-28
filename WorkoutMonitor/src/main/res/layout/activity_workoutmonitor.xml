@@ -8,22 +8,12 @@
     tools:context="com.myoworkoutmonitor.android.workoutmonitor.MainActivity"
     tools:ignore="MergeRootFrame">
 
-    <TextView
-        android:id="@+id/text"
-        android:text="@string/display_text"
-        android:textSize="20dp"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        tools:ignore="SpUsage"/>
-
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_gravity="center_horizontal|bottom">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,20 +30,33 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/rep_text"
+        android:text="@string/rep_text"
+        android:textSize="25dp"
+        android:textColor="@color/myosdk__button_red"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:ignore="SpUsage"/>
+
+    <TextView
         android:id="@+id/angle_text"
         android:text="@string/angle_text"
         android:textSize="15dp"
         android:textColor="#333"
-        android:layout_width="112dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:ignore="SpUsage"/>
+        android:layout_width="184dp"
+        android:layout_height="249dp"
+        android:layout_gravity="center_horizontal|bottom"
+        tools:ignore="SpUsage"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        android:singleLine="false" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal|top"
+        android:layout_gravity="center"
         android:src="@drawable/gauge" />
 
 </FrameLayout>
