@@ -368,14 +368,14 @@ public class MainActivity extends Activity {
 //        // maxReached minReached
         ImageView img = (ImageView) findViewById(R.id.imageView);
 
-        if (pitch > validMaxMinimun && !maxReached) {
+        if (pitch > validMaxMinimun && !maxReached && !isRecording) {
             repCount ++;
             maxReached = true;
             img.setImageResource(R.drawable.gauge_green);
 
         }
 
-        if (pitch < validMaxMinimun) {
+        if (pitch < validMaxMinimun && !isRecording) {
             maxReached = false;
             img.setImageResource(R.drawable.gauge);
         }
